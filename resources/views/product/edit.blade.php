@@ -3,7 +3,7 @@
 @section('body')
 <h1 class="mb-0">Edit Product</h1>
 <hr />
-<form action="{{route('product.update', $product->id}}" method="POST">
+<form action="{{ route('product.update', $product->id) }}" method="POST">
     @csrf
     @method('PUT')
     <div class="row">
@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col mb-3">
-            <label class="form-label">product_code</label>
+            <label class="form-label">Product Code</label>
             <input type="text" name="product_code" class="form-control" placeholder="Product Code" value="{{ $product->product_code }}">
         </div>
         <div class="col mb-3">
@@ -27,19 +27,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col mb-3">
-            <label class="form-label">Created At</label>
-            <input type="text" name="created_at" class="form-control" placeholder="Created At" value="{{ $product->created_at }}">
-        </div>
-        <div class="col mb-3">
-            <label class="form-label">Updated At</label>
-            <input type="text" name="updated_at" class="form-control" placeholder="Updated At" value="{{ $product->updated_at }}">
-        </div>
-    </div>
-    <div class="row">
         <div class="d-grid">
             <button class="btn btn-warning">Update</button>
         </div>
     </div>
-</form>>
+</form>
 @endsection
