@@ -2,8 +2,8 @@
 
 @section('body')
 <div class="d-flex align-items-center justify-content-between">
-    <h1 class="mb-0">List Product</h1>
-    <a href="{{route('product.create')}}" class="btn btn-primary">Add Product</a>
+    <h1 class="mb-0">uplink</h1>
+    <a href="{{route('post.create')}}" class="btn btn-primary">Add Post</a>
 </div>
 @if(Session::has('success'))
 <div class="alert alert-success" role="alert">
