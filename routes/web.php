@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/product', ProductController::class);
+
 Route::resource('/post', PostsController::class);
 
 Route::post('/unlike/{post_id}', [PostsController::class, 'unlike'])->name('remove.like');
