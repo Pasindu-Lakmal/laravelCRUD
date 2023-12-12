@@ -29,21 +29,13 @@
             </button>
             <a href="" type="button" class="btn btn-danger ">Unlike</a>
             @else
-            <button class="btn btn-light" style="border-color:black ;">
-                    <i class="bi bi-hand-thumbs-up"></i> Like {{ $post->likes_count }}
-            </button>
-
-
-            <!-- <form action="{{ route('post.like', ['post' => $post->id]) }}" method="post">
+<!--             
+            <form action="{{ route('add.like') }}" method="post">
                 @csrf
-                @method('POST')
-                <button type="submit" class="btn btn-light" style="border-color:black;">
-                    <i class="bi bi-hand-thumbs-up"></i> Like {{ $post->likes_count }}
-                </button>
+                <button type="submit">Add Like</button>
             </form> -->
+
             @endif
-
-
             <!-- Share Button with Bootstrap Icon -->
             <button class="btn btn-info">
                 <i class="bi bi-share"></i> Share

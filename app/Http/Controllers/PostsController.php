@@ -14,27 +14,60 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $likes = Like::orderBy('created_at', 'DESC')->get();
+        dump($likes);
         $posts = Posts::orderBy('created_at', 'DESC')->get();
-
         $userID = 1;
-        
+
         $likedPostIds = Like::where('user_id_FrKey', $userID)->pluck('Post_id_FrKey')->toArray();
-    
-      
+
+
 
         foreach ($posts as $post) {
             $post->isLiked = false;
             foreach ($likedPostIds as $likedPostId) {
-                if ($post->Post_Id === $likedPostId) { // Assuming your primary key column is named 'id'
+                if ($post->Post_Id === $likedPostId) {
                     $post->isLiked = true;
-                    break; // Exit the loop once a match is found
+                    break;
                 }
             }
         }
 
-        dump($posts);
+
         return view('posts.index', compact('posts'));
-       
+    }
+
+    public function addLike()
+    {
+
+        $like = new Like();
+         
+        $existingLike = Like::where('post_id_FrKey', 2)
+                            ->where('user_id_FrKey', 2) 
+                            ->first();
+
+        if ($existingLike) {
+            return "Like already exists!";
+        }
+
+        // Create a new Like instance
+        
+
+        // Set the user_id_FrKey and post_id_FrKey values
+        $like->user_id_FrKey = 2;
+        $like->post_id_FrKey = 2;
+
+        // Save the like to the database
+        $like->save();
+
+        return "Like added successfully!";
+    }
+
+
+
+    public function showAddLikeForm()
+    {
+        return view('add-like');
     }
 
     /**
@@ -59,9 +92,6 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        $post = Posts::find($id);
-        var_dump($post->users);
-        return  view('posts.show')->with('users',$post);
     }
 
     /**
@@ -77,10 +107,6 @@ class PostsController extends Controller
      */
     public function update(Request $postId)
     {
-        $userId = 1;
-        Like::updateOrCreate(
-            ['Post_id_FrKey' => $postId, 'user_id_FrKey' => $userId],
-        );
     }
 
     /**

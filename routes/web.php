@@ -21,4 +21,5 @@ Route::get('/', function () {
 
 Route::resource('/product', ProductController::class);
 Route::resource('/post', PostsController::class);
-Route::post('/post/like', 'PostController@like')->name('post.like');
+Route::post('/add-like', [PostsController::class, 'addLike'])->name('add.like');
+Route::get('/add-like-form', [PostsController::class, 'showAddLikeForm']);
