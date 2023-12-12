@@ -15,9 +15,10 @@ class PostsController extends Controller
     public function index()
     {
         $likes = Like::orderBy('created_at', 'DESC')->get();
-        dump($likes);
+        $currentUserID = config('app.user_Id');
+        
         $posts = Posts::orderBy('created_at', 'DESC')->get();
-        $userID = 1;
+        $userID = $currentUserID;
 
         $likedPostIds = Like::where('user_id_FrKey', $userID)->pluck('Post_id_FrKey')->toArray();
 
@@ -39,6 +40,7 @@ class PostsController extends Controller
 
     public function addLike($post_id)
     {
+        $currentUserID = config('app.user_Id');
 
         $like = new Like();
          
@@ -54,7 +56,7 @@ class PostsController extends Controller
         
 
         // Set the user_id_FrKey and post_id_FrKey values
-        $like->user_id_FrKey = 1;
+        $like->user_id_FrKey = $currentUserID;
         $like->post_id_FrKey = $post_id;
 
         // Save the like to the database
@@ -129,15 +131,15 @@ class PostsController extends Controller
     public function like(Request $request, $postId)
     {
         // Assume that you have authenticated users, and you can get the user ID like this
-        $userId = 2;
+        $currentUserID = config('app.user_Id');
 
         // Check if the user has already liked the post
-        $existingLike = Like::where('user_id_FrKey', $userId)->where('Post_id_FrKey', $postId)->first();
+        $existingLike = Like::where('user_id_FrKey', $currentUserID)->where('Post_id_FrKey', $postId)->first();
 
         if (!$existingLike) {
             // If the user hasn't liked the post, create a new like
             Like::create([
-                'user_id_FrKey' => $userId,
+                'user_id_FrKey' => $currentUserID,
                 'Post_id_FrKey' => $postId,
             ]);
 

@@ -30,9 +30,9 @@
             <a href="" type="button" class="btn btn-danger ">Unlike</a>
             @else
 
-            <form action="{{ route('add.like', ['post_id' => $post->Post_Id]) }}" method="post">
+            <form class="btn"  action="{{ route('add.like', ['post_id' => $post->Post_Id]) }}" method="post">
                 @csrf
-                <button type="submit">Add Like</button>
+                <button class="btn btn-light" style="border-color: black;" type="submit">Add Like {{ $post->likes_count }} </button>
             </form>
             @endif
             <!-- Share Button with Bootstrap Icon -->
