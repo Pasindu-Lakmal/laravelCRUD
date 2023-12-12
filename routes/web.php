@@ -24,4 +24,5 @@ Route::resource('/post', PostsController::class);
 
 Route::post('/unlike/{post_id}', [PostsController::class, 'unlike'])->name('remove.like');
 Route::post('/add-like/{post_id}', [PostsController::class, 'addLike'])->name('add.like');
+Route::post('/share/{post_id}', [PostsController::class, 'share'])->name('post.share');;
 Route::get('/add-like-form', [PostsController::class, 'showAddLikeForm']);

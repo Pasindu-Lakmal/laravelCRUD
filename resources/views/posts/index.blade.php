@@ -25,25 +25,26 @@
             @if($post->isLiked)
 
             <button class="btn btn-primary" disabled>
-                <i class="bi bi-hand-thumbs-up"></i> Liked {{ $post->likes_count }}
+                <i class="fa fa-thumbs-up"></i> Liked {{ $post->likes_count }}
             </button>
             <form class="btn"  action="{{ route('remove.like', ['post_id' => $post->Post_Id]) }}" method="post">
                 @csrf
-                <button class="btn btn-danger"  type="submit">Unlike </button>
+                <button class="btn btn-danger"  type="submit"><i class="fa fa-thumbs-down" ></i> Unlike </button>
             </form>
             <!-- <a href="" type="button" class="btn btn-danger ">Unlike</a> -->
             @else
 
             <form class="btn"  action="{{ route('add.like', ['post_id' => $post->Post_Id]) }}" method="post">
                 @csrf
-                <button class="btn 
-                "style="border-color: black;" type="submit">Add Like {{ $post->likes_count }} </button>
+                <button class="btn" style="border-color: black;" type="submit"><i class="fa fa-thumbs-up"></i> Add Like {{ $post->likes_count }} </button>
             </form>
             @endif
             <!-- Share Button with Bootstrap Icon -->
-            <button class="btn btn-info">
-                <i class="bi bi-share"></i> Share
-            </button>
+
+            <form class="btn"  action="{{ route('post.share', ['post_id' => $post->Post_Id]) }}" method="post">
+                @csrf
+                <button class="btn btn-info" type="submit"> <i class="fa fa-share"></i> Share </button>
+            </form>
 
             <!-- Download Button with Bootstrap Icon -->
             <a href="#" class="btn btn-success">

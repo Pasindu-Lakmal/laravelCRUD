@@ -157,4 +157,8 @@ class PostsController extends Controller
     {
         //
     }
+    public function share(string $id)
+    {
+        return view('posts.share' , compact('id'));
+    }
 }
