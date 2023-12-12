@@ -14,7 +14,7 @@
 @foreach($posts as $post)
 
 <div style="display: flex;justify-content: center;">
-    <div class="card m-3" style="width: 25rem;">
+    <div class="card m-3" style="width: 40rem;">
         <img src="https://via.placeholder.com/200" class="card-img-top" alt="Card Image">
         <div class="card-body">
             <h5 class="card-title">{{ $post->Title }}</h5>
@@ -27,12 +27,17 @@
             <button class="btn btn-primary" disabled>
                 <i class="bi bi-hand-thumbs-up"></i> Liked {{ $post->likes_count }}
             </button>
-            <a href="" type="button" class="btn btn-danger ">Unlike</a>
+            <form class="btn"  action="{{ route('remove.like', ['post_id' => $post->Post_Id]) }}" method="post">
+                @csrf
+                <button class="btn btn-danger"  type="submit">Unlike </button>
+            </form>
+            <!-- <a href="" type="button" class="btn btn-danger ">Unlike</a> -->
             @else
 
             <form class="btn"  action="{{ route('add.like', ['post_id' => $post->Post_Id]) }}" method="post">
                 @csrf
-                <button class="btn btn-light" style="border-color: black;" type="submit">Add Like {{ $post->likes_count }} </button>
+                <button class="btn 
+                "style="border-color: black;" type="submit">Add Like {{ $post->likes_count }} </button>
             </form>
             @endif
             <!-- Share Button with Bootstrap Icon -->
@@ -44,6 +49,8 @@
             <a href="#" class="btn btn-success">
                 <i class="bi bi-cloud-download"></i> Download
             </a>
+
+            <a href="{{ route('post.show',  $post->Post_Id) }}" type="button" class="btn btn-secondary">Detail</a>
         </div>
     </div>
 </div>

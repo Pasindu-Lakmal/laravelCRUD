@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
+     
     /**
      * Display a listing of the resource.
      */
@@ -69,7 +70,7 @@ class PostsController extends Controller
         Like::where('user_id_FrKey', $currentUserID)
             ->where('post_id_FrKey', $post_id)
             ->delete();
-
+        Posts::where('Post_Id', $post_id)->decrement('likes_count');
         return redirect()->route('post.index');
 
     }
@@ -103,6 +104,35 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
+        $likes = Like::orderBy('created_at', 'DESC')->get();
+        $currentUserID = config('app.user_Id');
+        
+        $posts = Posts::orderBy('created_at', 'DESC')->get();
+        $userID = $currentUserID;
+
+        $likedPostIds = Like::where('user_id_FrKey', $userID)->pluck('Post_id_FrKey')->toArray();
+
+
+
+        foreach ($posts as $post) {
+            $post->isLiked = false;
+            foreach ($likedPostIds as $likedPostId) {
+                if ($post->Post_Id === $likedPostId) {
+                    $post->isLiked = true;
+                    break;
+                }
+            }
+        }
+
+        foreach ($posts as $post) {
+            if($post->Post_Id == $id){
+                $selected_post  = $post;
+            }
+        }
+
+        
+
+        return view('posts.show', compact('selected_post'));
     }
 
     /**
@@ -126,37 +156,5 @@ class PostsController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-
-    // public function like($postId)
-    // {
-    //      $userId = 1;
-    //     Like::updateOrCreate(
-    //         ['Post_id_FrKey' => $postId, 'user_id_FrKey' => $userId],
-    //     );
-    // }
-
-    public function like(Request $request, $postId)
-    {
-        // Assume that you have authenticated users, and you can get the user ID like this
-        $currentUserID = config('app.user_Id');
-
-        // Check if the user has already liked the post
-        $existingLike = Like::where('user_id_FrKey', $currentUserID)->where('Post_id_FrKey', $postId)->first();
-
-        if (!$existingLike) {
-            // If the user hasn't liked the post, create a new like
-            Like::create([
-                'user_id_FrKey' => $currentUserID,
-                'Post_id_FrKey' => $postId,
-            ]);
-
-            return redirect()->back()->with('success', 'Post liked successfully!');
-        } else {
-            // If the user has already liked the post, you may want to handle this case
-            // For example, you can redirect back with a message or perform some other action.
-            return redirect()->back()->with('error', 'You have already liked this post!');
-        }
     }
 }
