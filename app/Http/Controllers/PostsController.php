@@ -52,17 +52,26 @@ class PostsController extends Controller
             return "Like already exists!";
         }
 
-        // Create a new Like instance
-        
-
-        // Set the user_id_FrKey and post_id_FrKey values
         $like->user_id_FrKey = $currentUserID;
         $like->post_id_FrKey = $post_id;
 
-        // Save the like to the database
         $like->save();
+        Posts::where('Post_Id', $post_id)->increment('likes_count');
+        return redirect()->route('post.index');
+    }
 
-        return "Like added successfully!";
+    public function unlike($post_id)
+    {
+        $currentUserID = config('app.user_Id');
+    
+
+        // Find and delete the like record based on the hardcoded values
+        Like::where('user_id_FrKey', $currentUserID)
+            ->where('post_id_FrKey', $post_id)
+            ->delete();
+
+        return redirect()->route('post.index');
+
     }
 
 
