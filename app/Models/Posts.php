@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Posts extends Model
 {
     use HasFactory;
+   
+    
 
     protected $fillable = [
         'Title',
@@ -21,4 +23,9 @@ class Posts extends Model
         'Dep_Id',
         'Faculty_Id'
     ];
+
+    public function users()
+    {
+         return $this->belongsToMany(User::class);
+    }
 }

@@ -10,13 +10,58 @@
     {{ Session::get('success') }}
 </div>
 @endif
-    @if($posts->count() > 0)
-    @foreach($posts as $post)
-    <div>{{ $post->Title }}</div>
-    @endforeach
-    @else
-        <tr>
-            <td class="text-center" colspan="5">Posts not found</td>
-        </tr>
-    @endif
+@if($posts->count() > 0)
+@foreach($posts as $post)
+
+<div style="display: flex;justify-content: center;">
+    <div class="card m-3" style="width: 25rem;">
+        <img src="https://via.placeholder.com/200" class="card-img-top" alt="Card Image">
+        <div class="card-body">
+            <h5 class="card-title">{{ $post->Title }}</h5>
+            <p class="card-text">{{ $post->Description }}</p>
+        </div>
+        <div class="card-footer">
+            <!-- Like Button with Bootstrap Icon -->
+            @if($post->isLiked)
+
+            <button class="btn btn-primary" disabled>
+                <i class="bi bi-hand-thumbs-up"></i> Liked {{ $post->likes_count }}
+            </button>
+            <a href="" type="button" class="btn btn-danger ">Unlike</a>
+            @else
+            <button class="btn btn-light" style="border-color:black ;">
+                    <i class="bi bi-hand-thumbs-up"></i> Like {{ $post->likes_count }}
+            </button>
+
+
+            <!-- <form action="{{ route('post.like', ['post' => $post->id]) }}" method="post">
+                @csrf
+                @method('POST')
+                <button type="submit" class="btn btn-light" style="border-color:black;">
+                    <i class="bi bi-hand-thumbs-up"></i> Like {{ $post->likes_count }}
+                </button>
+            </form> -->
+            @endif
+
+
+            <!-- Share Button with Bootstrap Icon -->
+            <button class="btn btn-info">
+                <i class="bi bi-share"></i> Share
+            </button>
+
+            <!-- Download Button with Bootstrap Icon -->
+            <a href="#" class="btn btn-success">
+                <i class="bi bi-cloud-download"></i> Download
+            </a>
+        </div>
+    </div>
+</div>
+
+
+@endforeach
+@else
+<tr>
+    <td class="text-center" colspan="5">Posts not found</td>
+</tr>
+@endif
 @endsection

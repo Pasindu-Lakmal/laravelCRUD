@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\LikeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +21,4 @@ Route::get('/', function () {
 
 Route::resource('/product', ProductController::class);
 Route::resource('/post', PostsController::class);
+Route::post('/post/like', 'PostController@like')->name('post.like');
