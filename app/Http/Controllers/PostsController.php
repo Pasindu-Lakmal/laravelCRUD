@@ -37,13 +37,13 @@ class PostsController extends Controller
         return view('posts.index', compact('posts'));
     }
 
-    public function addLike()
+    public function addLike($post_id)
     {
 
         $like = new Like();
          
-        $existingLike = Like::where('post_id_FrKey', 2)
-                            ->where('user_id_FrKey', 2) 
+        $existingLike = Like::where('post_id_FrKey', $post_id)
+                            ->where('user_id_FrKey', 1) 
                             ->first();
 
         if ($existingLike) {
@@ -54,8 +54,8 @@ class PostsController extends Controller
         
 
         // Set the user_id_FrKey and post_id_FrKey values
-        $like->user_id_FrKey = 2;
-        $like->post_id_FrKey = 2;
+        $like->user_id_FrKey = 1;
+        $like->post_id_FrKey = $post_id;
 
         // Save the like to the database
         $like->save();
@@ -129,7 +129,7 @@ class PostsController extends Controller
     public function like(Request $request, $postId)
     {
         // Assume that you have authenticated users, and you can get the user ID like this
-        $userId = 1;
+        $userId = 2;
 
         // Check if the user has already liked the post
         $existingLike = Like::where('user_id_FrKey', $userId)->where('Post_id_FrKey', $postId)->first();

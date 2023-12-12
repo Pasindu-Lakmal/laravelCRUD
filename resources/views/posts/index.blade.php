@@ -29,12 +29,11 @@
             </button>
             <a href="" type="button" class="btn btn-danger ">Unlike</a>
             @else
-<!--             
-            <form action="{{ route('add.like') }}" method="post">
+
+            <form action="{{ route('add.like', ['post_id' => $post->Post_Id]) }}" method="post">
                 @csrf
                 <button type="submit">Add Like</button>
-            </form> -->
-
+            </form>
             @endif
             <!-- Share Button with Bootstrap Icon -->
             <button class="btn btn-info">
